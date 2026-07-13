@@ -13,7 +13,7 @@ app=application
 
 @app.route('/')
 def index():
-    return render_template('index.html') 
+    return "ANITRA'S DEPLOYMENT IS WORKING"
 
 @app.route('/predictdata',methods=['GET','POST'])
 def predict_datapoint():
