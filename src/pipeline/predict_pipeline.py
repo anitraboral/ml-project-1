@@ -10,38 +10,24 @@ class PredictPipeline:
         pass
 
     def predict(self, features):
-    try:
-        print("Step 1")
+        try:
+            model_path = os.path.join("artifacts", "model.pkl")
+            preprocessor_path = os.path.join("artifacts", "preprocessor.pkl")
 
-        model_path = os.path.join("artifacts", "model.pkl")
-        preprocessor_path = os.path.join("artifacts", "preprocessor.pkl")
+            print("Before Loading")
 
-        print(model_path)
-        print(preprocessor_path)
+            model = load_object(file_path=model_path)
+            preprocessor = load_object(file_path=preprocessor_path)
 
-        print("Step 2")
+            print("After Loading")
 
-        model = load_object(file_path=model_path)
+            data_scaled = preprocessor.transform(features)
+            preds = model.predict(data_scaled)
 
-        print("Step 3")
+            return preds
 
-        preprocessor = load_object(file_path=preprocessor_path)
-
-        print("Step 4")
-
-        data_scaled = preprocessor.transform(features)
-
-        print("Step 5")
-
-        preds = model.predict(data_scaled)
-
-        print("Step 6")
-
-        return preds
-
-    except Exception as e:
-        print(e)
-        raise
+        except Exception as e:
+            raise CustomException(e, sys)
         
         
 
