@@ -1,5 +1,6 @@
 import sys
 import os
+import traceback
 import pandas as pd
 from src.exception import CustomException
 from src.utils import load_object
@@ -25,10 +26,12 @@ class PredictPipeline:
             preds = model.predict(data_scaled)
 
             return preds
-
         except Exception as e:
-            raise CustomException(e, sys)
-        
+            import traceback
+            traceback.print_exc()
+            print("REAL ERROR:", e)
+            raise
+       
         
 
 
