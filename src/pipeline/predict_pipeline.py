@@ -1,7 +1,8 @@
-import sys
 import os
+import sys
 import traceback
 import pandas as pd
+
 from src.exception import CustomException
 from src.utils import load_object
 
@@ -23,40 +24,41 @@ class PredictPipeline:
             print("After Loading")
 
             data_scaled = preprocessor.transform(features)
+
+            print("After Transform")
+
             preds = model.predict(data_scaled)
 
+            print("After Prediction")
+
             return preds
+
         except Exception as e:
-            import traceback
+            print("\n========== REAL ERROR ==========")
             traceback.print_exc()
-            print("REAL ERROR:", e)
+            print("Exception:", repr(e))
+            print("================================\n")
             raise
-       
-        
 
 
 class CustomData:
-    def __init__(  self,
+    def __init__(
+        self,
         gender: str,
         race_ethnicity: str,
         parental_level_of_education,
         lunch: str,
         test_preparation_course: str,
         reading_score: int,
-        writing_score: int):
+        writing_score: int,
+    ):
 
         self.gender = gender
-
         self.race_ethnicity = race_ethnicity
-
         self.parental_level_of_education = parental_level_of_education
-
         self.lunch = lunch
-
         self.test_preparation_course = test_preparation_course
-
         self.reading_score = reading_score
-
         self.writing_score = writing_score
 
     def get_data_as_data_frame(self):
@@ -75,4 +77,3 @@ class CustomData:
 
         except Exception as e:
             raise CustomException(e, sys)
-
